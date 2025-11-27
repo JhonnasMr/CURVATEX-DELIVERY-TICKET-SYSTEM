@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { CircleCheckIcon, CircleHelpIcon, CircleIcon } from "lucide-react"
 
 import { useIsMobile } from "@/hooks/useIsMobile"
 import {
@@ -12,46 +11,8 @@ import {
     NavigationMenuLink,
     NavigationMenuList,
     NavigationMenuTrigger,
-    navigationMenuTriggerStyle,
+    // navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-
-const components: { title: string; href: string; description: string }[] = [
-    {
-        title: "Alert Dialog",
-        href: "/docs/primitives/alert-dialog",
-        description:
-            "A modal dialog that interrupts the user with important content and expects a response.",
-    },
-    {
-        title: "Hover Card",
-        href: "/docs/primitives/hover-card",
-        description:
-            "For sighted users to preview content available behind a link.",
-    },
-    {
-        title: "Progress",
-        href: "/docs/primitives/progress",
-        description:
-            "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-    },
-    {
-        title: "Scroll-area",
-        href: "/docs/primitives/scroll-area",
-        description: "Visually or semantically separates content.",
-    },
-    {
-        title: "Tabs",
-        href: "/docs/primitives/tabs",
-        description:
-            "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-    },
-    {
-        title: "Tooltip",
-        href: "/docs/primitives/tooltip",
-        description:
-            "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-    },
-]
 
 export default function NavigationMenuDemo() {
     const isMobile = useIsMobile("(max-width: 768px)")
@@ -70,10 +31,11 @@ export default function NavigationMenuDemo() {
                                         href="/"
                                     >
                                         <div className="mb-2 text-lg font-medium sm:mt-4">
-                                            shadcn/ui
+                                            Buscar Boleta
                                         </div>
                                         <p className="text-muted-foreground text-sm leading-tight">
-                                            Beautifully designed components built with Tailwind CSS.
+                                            Desde aquí puedes buscar tu boleta utilizando tu N° de Orden
+                                            y tu DNI/CE.
                                         </p>
                                     </a>
                                 </NavigationMenuLink>
@@ -90,53 +52,34 @@ export default function NavigationMenuDemo() {
                         </ul>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <NavigationMenuTrigger>Components</NavigationMenuTrigger>
-                    <NavigationMenuContent>
-                        <ul className="grid gap-2 sm:w-[400px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
-                            {components.map((component) => (
-                                <ListItem
-                                    key={component.title}
-                                    title={component.title}
-                                    href={component.href}
-                                >
-                                    {component.description}
-                                </ListItem>
-                            ))}
-                        </ul>
-                    </NavigationMenuContent>
-                </NavigationMenuItem>
-                <NavigationMenuItem>
-                    <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-                        <Link href="/docs">Docs</Link>
-                    </NavigationMenuLink>
-                </NavigationMenuItem>
-                <NavigationMenuItem className="hidden md:block">
-                    <NavigationMenuTrigger>List</NavigationMenuTrigger>
+                <NavigationMenuItem className="md:block">
+                    <NavigationMenuTrigger>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-lock-share"><path stroke="none" d="M0 0h24v24H0z" fill="none" /><path d="M11 16a1 1 0 1 0 2 0a1 1 0 0 0 -2 0" /><path d="M12 21h-5a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2" /><path d="M8 11v-4a4 4 0 1 1 8 0v4" /><path d="M16 22l5 -5" /><path d="M21 21.5v-4.5h-4.5" /></svg>
+                    </NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <ul className="grid w-[300px] gap-4">
                             <li>
                                 <NavigationMenuLink asChild>
-                                    <Link href="#">
-                                        <div className="font-medium">Components</div>
+                                    <Link href="/auth/login">
+                                        <div className="font-medium">Iniciar Sesion</div>
                                         <div className="text-muted-foreground">
-                                            Browse all components in the library.
+                                            Inicia con tu cuenta para subir vouchers.
+                                        </div>
+                                    </Link>
+                                </NavigationMenuLink>
+                                <NavigationMenuLink asChild>
+                                    <Link href="/auth/forgot">
+                                        <div className="font-medium">Recuperar contraseña</div>
+                                        <div className="text-muted-foreground">
+                                            Aprende cómo recuperar tu contraseña.
                                         </div>
                                     </Link>
                                 </NavigationMenuLink>
                                 <NavigationMenuLink asChild>
                                     <Link href="#">
-                                        <div className="font-medium">Documentation</div>
+                                        <div className="font-medium">Registrar</div>
                                         <div className="text-muted-foreground">
-                                            Learn how to use the library.
-                                        </div>
-                                    </Link>
-                                </NavigationMenuLink>
-                                <NavigationMenuLink asChild>
-                                    <Link href="#">
-                                        <div className="font-medium">Blog</div>
-                                        <div className="text-muted-foreground">
-                                            Read our latest blog posts.
+                                            Crea una cuenta nueva para subir vouchers.
                                         </div>
                                     </Link>
                                 </NavigationMenuLink>
@@ -144,7 +87,7 @@ export default function NavigationMenuDemo() {
                         </ul>
                     </NavigationMenuContent>
                 </NavigationMenuItem>
-                <NavigationMenuItem className="hidden md:block">
+                {/* <NavigationMenuItem className="hidden md:block">
                     <NavigationMenuTrigger>Simple</NavigationMenuTrigger>
                     <NavigationMenuContent>
                         <ul className="grid w-[200px] gap-4">
@@ -188,7 +131,7 @@ export default function NavigationMenuDemo() {
                             </li>
                         </ul>
                     </NavigationMenuContent>
-                </NavigationMenuItem>
+                </NavigationMenuItem> */}
             </NavigationMenuList>
         </NavigationMenu>
     )
