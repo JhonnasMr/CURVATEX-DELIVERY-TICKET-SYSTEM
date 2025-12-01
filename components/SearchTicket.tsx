@@ -36,16 +36,14 @@ export default function SearchTicket() {
         console.log("Documento:", documento)
 
         // Aquí puedes llamar a tu API, router, etc.
-        let { data: VOUCHERS, error } = await supabase
-            .from('VOUCHERS')
-            .select('*')
-            .eq('NRO_ORDEN', otp)
-            .eq('DOCUMENTO', documento)
+        let { data: VOUCHERS, error } = await supabase.storage
+            .from('tickets')
+            .createSignedUrl(`tickets/${documento}.jpg`, 60)
 
         if (error) {
             console.error("Error al buscar la boleta:", error)
         } else {
-            setVoucher(JSON.stringify(VOUCHERS))
+            setVoucher(VOUCHERS?.signedUrl || '')
             console.log("Boleta encontrada:", VOUCHERS)
         }
     }
@@ -55,7 +53,7 @@ export default function SearchTicket() {
 
             {/* ----- CAPTURAR OTP ----- */}
             <div>
-                <InputOTP
+                {/* <InputOTP
                     maxLength={4}
                     value={otp}
                     onChange={(value) => setOtp(value)}   // ← Captura el OTP
@@ -69,7 +67,7 @@ export default function SearchTicket() {
                         <InputOTPSeparator />
                         <InputOTPSlot index={3} />
                     </InputOTPGroup>
-                </InputOTP>
+                </InputOTP> */}
             </div>
 
             {/* ----- CAPTURAR DNI/CE ----- */}
@@ -103,7 +101,12 @@ export default function SearchTicket() {
             {/* ----- MOSTRAMOS LA BOLETA ----- */}
             <div>
                 {/* Aquí puedes renderizar la boleta obtenida */}
-                <CarouselVoucher voucher={voucher} />
+                {/* <CarouselVoucher voucher={voucher} /> */}
+                {voucher && (
+                    <div className="border p-4 rounded-lg shadow-md">
+                        <Image src={voucher} alt="Voucher" width={400} height={900} />
+                    </div>
+                )}
             </div>
         </div>
     )
